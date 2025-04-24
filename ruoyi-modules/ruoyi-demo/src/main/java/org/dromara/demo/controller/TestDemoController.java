@@ -1,6 +1,8 @@
 package org.dromara.demo.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaIgnore;
+import lombok.extern.slf4j.Slf4j;
 import org.dromara.common.core.domain.R;
 import org.dromara.common.core.utils.MapstructUtils;
 import org.dromara.common.core.utils.ValidatorUtils;
@@ -39,6 +41,7 @@ import java.util.concurrent.TimeUnit;
  * @author Lion Li
  * @date 2021-07-26
  */
+@Slf4j
 @Validated
 @RequiredArgsConstructor
 @RestController
@@ -143,5 +146,33 @@ public class TestDemoController extends BaseController {
     public R<Void> remove(@NotEmpty(message = "主键不能为空")
                           @PathVariable Long[] ids) {
         return toAjax(testDemoService.deleteWithValidByIds(Arrays.asList(ids), true));
+    }
+
+    @SaIgnore
+    @PostMapping("/srsOnPublish")
+    public Integer srsOnPublish(@RequestBody Map<String,String> map){
+        log.info("srsOnPublish回调参数：{}",map);
+        return 0;
+    }
+
+    @SaIgnore
+    @PostMapping("/srsOnUnpublish")
+    public Integer srsOnUnpublish(@RequestBody Map<String,String> map){
+        log.info("srsOnUnpublish回调参数：{}",map);
+        return 0;
+    }
+
+    @SaIgnore
+    @PostMapping("/srsOnPlay")
+    public Integer srsOnPlay(@RequestBody Map<String,String> map){
+        log.info("srsOnPlay回调参数：{}",map);
+        return 0;
+    }
+
+    @SaIgnore
+    @PostMapping("/srsOnStop")
+    public Integer srsOnStop(@RequestBody Map<String,String> map){
+        log.info("srsOnStop回调参数：{}",map);
+        return 0;
     }
 }
