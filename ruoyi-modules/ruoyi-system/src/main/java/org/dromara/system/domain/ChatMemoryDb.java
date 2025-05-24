@@ -15,8 +15,5 @@ public class ChatMemoryDb {
     @Field("memory_id")
     private Long memoryId;
 
-    @Field("user_id")
-    private Long userId;
-
     private String content;
 }

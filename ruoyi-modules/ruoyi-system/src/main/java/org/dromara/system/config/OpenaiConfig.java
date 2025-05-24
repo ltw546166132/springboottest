@@ -5,7 +5,9 @@ import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore;
+import org.dromara.common.core.utils.SpringUtils;
 import org.dromara.system.service.AiAssistant;
+import org.dromara.system.service.MongoChatMemoryStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +33,8 @@ public class OpenaiConfig {
     public AiAssistant aiAssistant(ChatLanguageModel openAiChatModel){
         return AiServices.builder(AiAssistant.class)
             .chatLanguageModel(openAiChatModel)
-            .chatMemoryProvider(memoryId -> MessageWindowChatMemory.builder().id(memoryId).maxMessages(10).chatMemoryStore(new InMemoryChatMemoryStore()).build())
+//            .chatMemoryProvider(memoryId -> MessageWindowChatMemory.builder().id(memoryId).maxMessages(10).chatMemoryStore(new InMemoryChatMemoryStore()).build())
+            .chatMemoryProvider(memoryId -> MessageWindowChatMemory.builder().id(memoryId).maxMessages(10).chatMemoryStore(SpringUtils.getBean(MongoChatMemoryStore.class)).build())
             .build();
     }
 }
