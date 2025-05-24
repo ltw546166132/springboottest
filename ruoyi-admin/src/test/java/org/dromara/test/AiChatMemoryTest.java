@@ -1,7 +1,6 @@
 package org.dromara.test;
 
 import jakarta.annotation.Resource;
-import org.dromara.common.core.domain.R;
 import org.dromara.system.domain.ChatMemoryDb;
 import org.dromara.system.service.AiAssistant;
 import org.junit.jupiter.api.Test;
@@ -25,10 +24,10 @@ public class AiChatMemoryTest {
 
     static Stream<Arguments> chatMemoryData() {
         return Stream.of(
-            Arguments.of(1L, 1L, "来自 memoryId为1 的第1条内容"),
-            Arguments.of(1L, 1L, "来自 memoryId为1  的第2条内容"),
-            Arguments.of(2L, 1L, "来自 memoryId为2  的第1条内容"),
-            Arguments.of(2L, 1L, "来自 memoryId为2  的第2条内容")
+            Arguments.of(1L,"来自 memoryId为1 的第1条内容"),
+            Arguments.of(1L,"来自 memoryId为1  的第2条内容"),
+            Arguments.of(2L,"来自 memoryId为2  的第1条内容"),
+            Arguments.of(2L,"来自 memoryId为2  的第2条内容")
         );
     }
 
@@ -56,8 +55,24 @@ public class AiChatMemoryTest {
     @Test
     public void testAiAssistant(){
         String json1 = aiAssistant.memmoryChat(1L,"你好, 我叫memory1");
+        System.out.println(json1);
         String json2 = aiAssistant.memmoryChat(2L,"你好, 我叫memory2");
+        System.out.println(json2);
         String json3 = aiAssistant.memmoryChat(1L,"你好, 我叫什么");
+        System.out.println(json3);
         String json4 = aiAssistant.memmoryChat(2L,"你好, 我叫什么");
+        System.out.println(json4);
+    }
+
+    @Test
+    public void promptChat(){
+        String json = aiAssistant.promptChat("你是一个Java后端专家",3L,1L,"Java中default是什么");
+        System.out.println(json);
+    }
+
+    @Test
+    public void toolsTest(){
+        String json = aiAssistant.promptChat("你拥有数学计算功能",4L,1L,"53.45454345加上545.65657757等于多少");
+        System.out.println(json);
     }
 }
